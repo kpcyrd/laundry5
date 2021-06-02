@@ -26,7 +26,7 @@ pub async fn load(path: &Path) -> Result<Vec<SocketAddr>> {
         proxies.push(proxy);
     }
 
-    debug!("Loaded {} proxies", proxies.len());
+    info!("Loaded {} proxies from file", proxies.len());
 
     Ok(proxies)
 }
