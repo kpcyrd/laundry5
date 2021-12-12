@@ -181,7 +181,7 @@ pub async fn serve(mut socket: TcpStream, proxies: Arc<Vec<SocketAddr>>) -> Resu
         .context("No proxies configured")?;
     debug!("Picked random proxy: {}", proxy);
 
-    let mut proxy = connect(&proxy, &addr, port)
+    let mut proxy = connect(proxy, &addr, port)
         .await
         .context("Failed to complete handshake with proxy")?;
 

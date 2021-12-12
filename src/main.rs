@@ -31,7 +31,7 @@ async fn main() -> Result<()> {
     // a stream of sighup signals
     let mut sighup = signal(SignalKind::hangup())?;
 
-    let proxies = list::load(&args.proxy_list)
+    let proxies = list::load_from_path(&args.proxy_list)
         .await
         .context("Failed to load proxy list")?;
     let proxies = ArcSwap::from(Arc::new(proxies));
@@ -59,7 +59,7 @@ async fn main() -> Result<()> {
             }
             _ = sighup.recv() => {
                 debug!("Got signal HUP");
-                match list::load(&args.proxy_list).await {
+                match list::load_from_path(&args.proxy_list).await {
                     Ok(list) => {
                         let list = Arc::new(list);
                         proxies.store(list);
